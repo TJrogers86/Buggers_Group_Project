@@ -3,6 +3,10 @@ library(shiny)
 # Define UI for data upload app ----
 ui <- fluidPage(
 
+
+###RUN BAREFOOT
+
+
   # App title ----
   titlePanel("Uploading Files"),
 
