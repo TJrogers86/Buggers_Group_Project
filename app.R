@@ -1,4 +1,3 @@
-
 #####
 #Bugger App
 #####
@@ -93,7 +92,8 @@ ui<-(fluidPage(
       tabPanel("Data Visualization", verbatimTextOutput('datavis')),
       tabPanel('Plot', plotOutput('plots')), # The name "Scatter Plot" is the name of the tab. 'scatter' is the part of the plot name to tell are to build the plot under Scatter Plot tab
       tabPanel('Linear Model', verbatimTextOutput('linear')),
-      tabPanel('ANOVA', verbatimTextOutput('anova'))
+      tabPanel('ANOVA', uiOutput('var'),
+               tableOutput('aovSummary'))
     ),
     h3(textOutput("caption")),
     uiOutput("plot") # depends on input
@@ -224,6 +224,14 @@ server<-(function(input, output, session){
     
   })
   
+  # ANOVA
+
+  output$aovSummary = renderTable({
+    an.obj <- get_data()
+    
+  rev.aov <- anova(lm(an.obj$data[,input$variable1] ~ an.obj$data[,input$variable2] + an.obj$data[,input$variable3] + an.obj$data[,input$variable2]:an.obj$data[,input$variable3]))
+  rev.aov
+  })
  
   
   # set uploaded file
@@ -243,9 +251,7 @@ server<-(function(input, output, session){
   observeEvent(input$file1,{
     inFile<<-upload_data()
   })
-  
 })
-
 
 # Create Shiny app ----
 shinyApp(ui, server)
