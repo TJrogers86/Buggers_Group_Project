@@ -89,11 +89,10 @@ ui<-(fluidPage(
   # output
   mainPanel(
     tabsetPanel(
-      tabPanel("Data Visualization", verbatimTextOutput('datavis')),
+      tabPanel("Data Visualization", DTOutput('datavis')),
       tabPanel('Plot', plotOutput('plots')), # The name "Scatter Plot" is the name of the tab. 'scatter' is the part of the plot name to tell are to build the plot under Scatter Plot tab
       tabPanel('Linear Model', verbatimTextOutput('linear')),
-      tabPanel('ANOVA', uiOutput('var'),
-               tableOutput('aovSummary'))
+      tabPanel('ANOVA', tableOutput('aovSummary'))
     ),
     h3(textOutput("caption")),
     uiOutput("plot") # depends on input
@@ -155,7 +154,10 @@ server<-(function(input, output, session){
     
   })
   #printing data to first tab
-  output$datavis <- renderPrint(get_data())
+  #printing data to first tab
+  output$datavis <- renderDT({
+    data.obj <- as.data.frame(get_data()) 
+    datatable(data.obj)})
   
   #plotting function using ggplot2
   output$plots <- renderPlot({
@@ -227,11 +229,14 @@ server<-(function(input, output, session){
   # ANOVA
 
   output$aovSummary = renderTable({
-    an.obj <- get_data()
     
-  rev.aov <- anova(lm(an.obj$data[,input$variable1] ~ an.obj$data[,input$variable2] + an.obj$data[,input$variable3] + an.obj$data[,input$variable2]:an.obj$data[,input$variable3]))
+  an.obj <- get_data()
+  Variable1 <- an.obj$data[,input$variable1]
+  Variable2 <- an.obj$data[,input$variable2]
+  Variable3 <- an.obj$data[,input$variable3]
+  rev.aov <- anova(lm(Variable1 ~ Variable2 + Variable3 + Variable2:Variable3))
   rev.aov
-  })
+   }, rownames = TRUE, colnames = TRUE)
  
   
   # set uploaded file
