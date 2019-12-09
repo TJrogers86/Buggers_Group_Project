@@ -28,4 +28,13 @@ Instructions for app use:
 	5)Cycle through the plots to see the varying relationships between the selected 				data.
 	6)Select the “Linear Model” tab. Note that the text under this tab contains the 				aforementioned statistical values that can be copied/pasted into another text 				editor if desired
 
-The code for this Shiny app, along with all previous versions of the app can be found at the following link: https://github.com/ColeNypaver/Buggers_Group_Project
+The code for this Shiny app, along with all previous versions of the app can be found at the following link: https://github.com/TJrogers86/Buggers_Group_Project
+
+References:
+Below are links to codes that we found very useful in the development of this package. Note that some elements of these referenced codes have been adapted and modified for the app presented here.
+
+https://gist.github.com/dgrapov/dfcf6ab2339b1cf19b090cfb8dadc855
+https://plot.ly/r/shinyapp-explore-diamonds/
+https://www.showmeshiny.com/ggplot-my-data/
+https://shiny.as.uky.edu/anova-app/
+
